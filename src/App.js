@@ -10,16 +10,6 @@ function App() {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: "", email: "", password: "", role: "USER" });
 
-  const fetchUsers = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/api/users");
-      setUsers(res.data);
-    } catch (err) {
-      showAlert("Error fetching users");
-      console.error(err);
-    }
-  };
-
   const addUser = async () => {
     if (!newUser.name || !newUser.email || !newUser.password) {
       showAlert("Please fill all fields");
@@ -68,7 +58,17 @@ function App() {
   };
 
   useEffect(() => {
-    if (page === "users") fetchUsers();
+    const loadUsers = async () => {
+      if (page !== "users") return;
+      try {
+        const res = await axios.get("http://localhost:8080/api/users");
+        setUsers(res.data);
+      } catch (err) {
+        showAlert("Error fetching users");
+        console.error(err);
+      }
+    };
+    loadUsers();
   }, [page]);
 
   /** ------------------- ACCOUNT MODULE ------------------- **/
