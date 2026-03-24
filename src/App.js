@@ -28,18 +28,24 @@ function App() {
     showAlert("User added successfully!");
   };
 
-  const deleteUser = async (id) => {
-    const { error, notice } = await apiService.deleteUser(id);
+ const deleteUser = async (id) => {
+  const deletePassword = prompt("Enter delete password:");
+  if (deletePassword !== "2005") {
+    showAlert("Invalid password. Delete canceled.");
+    return;
+  }
 
-    if (notice) showAlert(notice);
-    if (error) {
-      showAlert(error);
-      return;
-    }
+  const { error, notice } = await apiService.deleteUser(id);
 
-    setUsers(users.filter((u) => u.id !== id));
-    showAlert("User deleted successfully!");
-  };
+  if (notice) showAlert(notice);
+  if (error) {
+    showAlert(error);
+    return;
+  }
+
+  setUsers(users.filter((u) => u.id !== id));
+  showAlert("User deleted successfully!");
+};
 
   const updateUser = async (id) => {
     const updatedName = prompt("Enter new name:");
