@@ -28,7 +28,7 @@ function App() {
     showAlert("User added successfully!");
   };
 
- const deleteUser = async (id) => {
+const deleteUser = async (id) => {
   const { error, notice } = await apiService.deleteUser(id);
 
   if (notice) showAlert(notice);
@@ -40,9 +40,6 @@ function App() {
   setUsers(users.filter((u) => u.id !== id));
   showAlert("User deleted successfully!");
 }; 
-  setUsers(users.filter((u) => u.id !== id));
-  showAlert("User deleted successfully!");
-};
 
   const updateUser = async (id) => {
     const updatedName = prompt("Enter new name:");
